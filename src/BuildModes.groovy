@@ -11,7 +11,7 @@ void setBuildStatus(String message, String state) {
 def mavenBuildWithRelease() {
     node {
         checkout scm
-        stage ('Deploy') {
+        stage ('Build and Deploy') {
             if (env.BRANCH_NAME == 'master') {
                 sshagent('GitHub') {
                     try {
@@ -19,14 +19,16 @@ def mavenBuildWithRelease() {
                         sh 'mvn release:perform'
                     } catch (e) {
                         sh 'mvn release:rollback'
-                    } finally {
-                        junit allowEmptyResults: true, testResults: 'target/surefire-reports/**/*.xml'
-                        setBuildStatus("Build complete", "SUCCESS");
                     }
                 }
             } else {
                 sh 'mvn clean install'
             }
+        }
+        stage ('Publish Tests') {
+            junit allowEmptyResults: true, testResults: 'target/surefire-reports/**/*.xml'
+        } stage ('Update GitHub Status') {
+            setBuildStatus("Build complete", "SUCCESS")
         }
     }
 }
