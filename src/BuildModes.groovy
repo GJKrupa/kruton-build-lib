@@ -19,6 +19,7 @@ def mavenBuildWithRelease() {
                         sh 'mvn release:perform'
                     } catch (e) {
                         sh 'mvn release:rollback'
+                        throw e
                     }
                 }
             } else {
