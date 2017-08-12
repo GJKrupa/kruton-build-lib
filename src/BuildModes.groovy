@@ -23,6 +23,11 @@ def mavenBuildWithRelease() {
             if (env.BRANCH_NAME == 'master') {
                 if (skip_build()) {
                     echo 'Copying build state from previous build'
+		    def index = 0
+		    while (currentBuild.rawBuild.getPreviousBuild()?.getResult() == null && index < 60) {
+		    	sleep(1)
+			++index
+		    }
                     if(!hudson.model.Result.SUCCESS.equals(currentBuild.rawBuild.getPreviousBuild()?.getResult())) {
                         currentBuild.result = 'FAILURE'
                     }
