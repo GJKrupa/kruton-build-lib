@@ -27,7 +27,8 @@ def mavenBuildWithRelease() {
         }
         stage ('Publish Tests') {
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/**/*.xml'
-        } stage ('Update GitHub Status') {
+        }
+        stage ('Update GitHub Status') {
             setBuildStatus("Build complete", "SUCCESS")
         }
     }
