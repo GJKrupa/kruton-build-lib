@@ -25,7 +25,7 @@ def mavenBuildWithRelease() {
                     echo 'Copying build state from previous build'
 		    def index = 0
 		    while (currentBuild.rawBuild.getPreviousBuild()?.getResult() == null && index < 60) {
-		    	sleep(1)
+		    	sleep(10)
 			++index
 		    }
                     if(!hudson.model.Result.SUCCESS.equals(currentBuild.rawBuild.getPreviousBuild()?.getResult())) {
