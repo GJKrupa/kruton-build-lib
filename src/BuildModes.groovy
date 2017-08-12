@@ -13,7 +13,7 @@ def mavenBuildWithRelease() {
         checkout scm
         stage ('Build and Deploy') {
             if (env.BRANCH_NAME == 'master') {
-                sshagent('GitHub') {
+                sshagent(['GitHub']) {
                     try {
                         sh 'mvn release:prepare'
                         sh 'mvn release:perform'
