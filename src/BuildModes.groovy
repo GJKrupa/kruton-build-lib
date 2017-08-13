@@ -34,7 +34,7 @@ def mavenBuildWithRelease() {
                 } else {
                     sshagent(['GitHub']) {
                         try {
-                            sh 'mvn release:prepare'
+                            sh 'mvn release:prepare -DpushChanges=false'
                             sh 'mvn release:perform'
                         } catch (e) {
                             sh 'mvn release:rollback'
