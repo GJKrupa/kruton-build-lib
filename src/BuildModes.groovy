@@ -18,7 +18,15 @@ def skip_build() {
 
 def mavenBuildWithRelease() {
     node {
-        checkout scm
+        checkout([
+                $class: 'GitHubSCM',
+                branches: [[name: "*/${env.BRANCH_NAME}"]],
+                extensions: [
+                        [$class: 'CleanCheckout'],
+                        [$class: 'PruneStaleBranch'],
+                        [$class: 'LocalBranch', localBranch: '**']
+                ]
+        ])
         stage ('Build and Deploy') {
             if (env.BRANCH_NAME == 'master') {
                 if (skip_build()) {
