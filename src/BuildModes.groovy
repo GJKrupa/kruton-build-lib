@@ -19,7 +19,7 @@ def skip_build() {
 def mavenBuildWithRelease() {
     node {
         checkout([
-                $class: 'GitHubSCM',
+                $class: 'GitHubScm',
                 branches: [[name: "*/${env.BRANCH_NAME}"]],
                 extensions: [
                         [$class: 'CleanCheckout'],
