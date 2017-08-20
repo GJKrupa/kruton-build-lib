@@ -20,7 +20,7 @@ def mavenBuildWithRelease() {
     node {
         checkout([
                 $class: 'GitSCM',
-                branches: [[name: "${env.BRANCH_NAME}"]],
+                branches: [[name: "*/${env.BRANCH_NAME}"]],
                 extensions: [
                         [$class: 'PruneStaleBranch'],
                         [$class: 'LocalBranch', localBranch: '**']
